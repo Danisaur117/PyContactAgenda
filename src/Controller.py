@@ -14,7 +14,7 @@ class Controller:
 	def initDB(self):
 		#Leemos las opciones de configuración de BD del archivo
 		config = configparser.ConfigParser()
-		config.read('../config/bd.cfg')
+		config.read('./config/bd.cfg')
 		bdconfig = config['MYSQL_CONFIG']
 
 		#Inicializamos la conexión a MySQL

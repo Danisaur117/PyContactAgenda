@@ -1,6 +1,6 @@
-from Controller import Controller
+from src import Controller as kernel
 
-controller = Controller()
+controller = kernel.Controller()
 controller.initDB()
 
 result = controller.selectAll()
