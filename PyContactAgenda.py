@@ -8,7 +8,7 @@
 #
 # OBSERVACIONES:
 #	- Este archivo contiene la implementación de la vista de una Agenda de Contactos implementada
-#  	  en Python siguiendo el modelo MVC
+#  	  en Python
 
 from src import Controller as kernel
 from src import Contacto as contacto
@@ -38,13 +38,9 @@ def main():
 		if(opcion == '3'):
 			anyadirContacto(controller)
 
-		#Modificar contacto : TODO
+		#Modificar contacto
 		if(opcion == '4'):
 			modificarContacto(controller)
-			print("PENDIENTE DE IMPLEMENTAR")
-			print("")
-			print("Pulsa una tecla para continuar")
-			input()
 
 		#Eliminar contacto
 		if(opcion == '5'):
@@ -228,7 +224,124 @@ def anyadirContacto(controller):
 	print("Pulsa una tecla para continuar")
 	input()
 
-# def modificarContacto(controller):
+def modificarContacto(controller):
+	#Mostramos la cabecera de la aplicación y la cabecera de la opción
+	cabecera()
+	print("---> MODIFICAR CONTACTO DE LA AGENDA <---")
+	print("")
+
+	#Solicitamos nombre y apellidos del contacto a modificar
+	print("Nombre del contacto que deseas modificar")
+	nombre = input()
+
+	#Comprobamos que se ha introducido una cadena para el nombre
+	while(nombre == ""):
+		print("Nombre del contacto que deseas modificar")
+		nombre = input()
+
+	print("Apellido 1 del contacto que deseas modificar")
+	apellido1 = input()
+
+	#Comprobamos que se ha introducido una cadena para el primer apellido
+	while(apellido1 == ""):
+		print("Apellido 1 del contacto que deseas modificar")
+		apellido1 = input()
+
+	print("Apellido 2 del contacto que deseas modificar")
+	apellido2 = input()
+
+	#Comprobamos que se ha introducido una cadena para el segundo apellido
+	while(apellido2 == ""):
+		print("Apellido 2 del contacto que deseas modificar")
+		apellido2 = input()
+
+	#Ejecutamos el SELECT por nombre y apellidos sobre la tabla Contacto
+	result = controller.selectContactoPorNomCompleto(nombre, apellido1, apellido2)
+
+	#Mostramos los resultados por pantalla
+	if(len(result) == 0):
+		print("")
+		print("No se han encontrado coincidencias. Pulse una tecla para continuar")
+		input()
+		return
+	else:
+		#Si hay más de 1 resultado coincidente, damos opción al usuario a cancelar la modificación
+		if(len(result) > 1):
+			print("Hay " + str(len(result)) + " registros coincidentes. ¿Desea continuar? (sí/NO)")
+			opcion = input()
+			if(opcion != "sí"):
+				print("")
+				print("No se ha modificado ningún registro. Pulse una tecla para continuar")
+				input()
+				return
+			
+		newC = contacto.Contacto()
+
+		print("¿Deseas modificar el nombre? (s/NO)")
+		modificar = input()
+		if(modificar == "s"):
+			print("Introduce el nuevo valor para el nombre:")
+			valor = input()
+			newC.setNombre(valor)
+
+		print("¿Deseas modificar el apellido 1? (s/NO)")
+		modificar = input()
+		if(modificar == "s"):
+			print("Introduce el nuevo valor para el apellido 1:")
+			valor = input()
+			newC.setApellido1(valor)
+
+		print("¿Deseas modificar el apellido 2? (s/NO)")
+		modificar = input()
+		if(modificar == "s"):
+			print("Introduce el nuevo valor para el apellido 2:")
+			valor = input()
+			newC.setApellido2(valor)
+
+		print("¿Deseas modificar el teléfono? (s/NO)")
+		modificar = input()
+		if(modificar == "s"):
+			print("Introduce el nuevo valor para el teléfono:")
+			valor = input()
+			newC.setTelefono(valor)
+
+		print("¿Deseas modificar la dirección? (s/NO)")
+		modificar = input()
+		if(modificar == "s"):
+			print("Introduce el nuevo valor para la dirección:")
+			valor = input()
+			newC.setDireccion(valor)
+
+		print("¿Deseas modificar el código postal? (s/NO)")
+		modificar = input()
+		if(modificar == "s"):
+			print("Introduce el nuevo valor para el código postal:")
+			valor = input()
+			newC.setCodigoPostal(valor)
+
+		print("¿Deseas modificar la ciudad? (s/NO)")
+		modificar = input()
+		if(modificar == "s"):
+			print("Introduce el nuevo valor para la ciudad:")
+			valor = input()
+			newC.setCiudad(valor)
+
+		print("¿Deseas modificar el email? (s/NO)")
+		modificar = input()
+		if(modificar == "s"):
+			print("Introduce el nuevo valor para el email:")
+			valor = input()
+			newC.setEmail(valor)
+
+		#Ejecutamos las modificaciones indicadas sobre el registro seleccionado
+		modificado = controller.modificarContacto(nombre, apellido1, apellido2, newC)
+		print("")
+		if(modificado == True):
+			print("Contacto modificado correctamente. Pulse una tecla para continuar")
+		else:
+			print("No se ha modificado ningún contacto. Pulse una tecla para continuar")
+		
+		input()
 
 def eliminarContacto(controller):
 	#Mostramos la cabecera de la aplicación y la cabecera de la opción

@@ -57,3 +57,33 @@ class Contacto:
 	
 	def setEmail(self, email):
 		self.__email = email
+
+	def esPorDefecto(self):
+		if(self.__nombre == ""):
+			return False
+
+		if(self.__apellido1 == ""):
+			return False
+		
+		if(self.__apellido2 == ""):
+			return False
+
+		if(self.__telefono == 0):
+			return False
+
+		if(self.__direccion == ""):
+			return False
+
+		if(self.__codigoPostal == 0):
+			return False
+
+		if(self.__ciudad == ""):
+			return False
+
+		if(self.__email == ""):
+			return False
+
+		return True
+
+	def toString(self):
+		self.__nombre + " " + self.__apellido1 + " " + self.__apellido2 + " " + str(self.__telefono) + " " + self.__direccion + " " + str(self.__codigoPostal) + " " + self.__ciudad + " " + self.__email
