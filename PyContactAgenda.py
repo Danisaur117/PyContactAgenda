@@ -40,17 +40,15 @@ def main():
 
 		#Modificar contacto : TODO
 		if(opcion == '4'):
+			modificarContacto(controller)
 			print("PENDIENTE DE IMPLEMENTAR")
 			print("")
 			print("Pulsa una tecla para continuar")
 			input()
 
-		#Eliminar contacto : TODO
+		#Eliminar contacto
 		if(opcion == '5'):
-			print("PENDIENTE DE IMPLEMENTAR")
-			print("")
-			print("Pulsa una tecla para continuar")
-			input()
+			eliminarContacto(controller)
 
 		#Volvemos a mostrar el menú de opciones
 		cabecera()
@@ -147,7 +145,7 @@ def buscarContacto(controller):
 			apellido1 = input()
 			print("¿Qué apellido 2 deseas buscar?")
 			apellido2 = input()
-			#Ejecutamos el SELECT por apellido sobre la tabla Contacto
+			#Ejecutamos el SELECT por nombre y apellidos sobre la tabla Contacto
 			result = controller.selectContactoPorNomCompleto(nombre, apellido1, apellido2)
 
 		#Mostramos los resultados por pantalla
@@ -220,6 +218,7 @@ def anyadirContacto(controller):
 
 	#Generamos un objeto de la clase contacto y hacemos la llamada para insertarlo en BD
 	nuevoC = contacto.Contacto(nombre, apellido1, apellido2, telefono, direccion, cp, ciudad, email)
+	print("")
 	if(controller.anyadirContacto(nuevoC) == False):
 		print("Ha habido un error al insertar el contacto. Por favor, revisa los datos y vuelve a intentarlo")
 	else:
@@ -228,6 +227,65 @@ def anyadirContacto(controller):
 	print("")
 	print("Pulsa una tecla para continuar")
 	input()
+
+# def modificarContacto(controller):
+
+def eliminarContacto(controller):
+	#Mostramos la cabecera de la aplicación y la cabecera de la opción
+	cabecera()
+	print("---> ELIMINAR CONTACTO DE LA AGENDA <---")
+	print("")
+
+	#Solicitamos nombre y apellidos del contacto a eliminar
+	print("Nombre del contacto que deseas eliminar")
+	nombre = input()
+
+	#Comprobamos que se ha introducido una cadena para el nombre
+	while(nombre == ""):
+		print("Nombre del contacto que deseas eliminar")
+		nombre = input()
+
+	print("Apellido 1 del contacto que deseas eliminar")
+	apellido1 = input()
+
+	#Comprobamos que se ha introducido una cadena para el primer apellido
+	while(apellido1 == ""):
+		print("Apellido 1 del contacto que deseas eliminar")
+		apellido1 = input()
+
+	print("Apellido 2 del contacto que deseas eliminar")
+	apellido2 = input()
+
+	#Comprobamos que se ha introducido una cadena para el segundo apellido
+	while(apellido2 == ""):
+		print("Apellido 2 del contacto que deseas eliminar")
+		apellido2 = input()
+
+	#Ejecutamos el SELECT por nombre y apellidos sobre la tabla Contacto
+	result = controller.selectContactoPorNomCompleto(nombre, apellido1, apellido2)
+
+	#Mostramos los resultados por pantalla
+	if(len(result) == 0):
+		print("")
+		print("No se han encontrado coincidencias. Pulse una tecla para continuar")
+		input()
+		return
+	else:
+		#Si hay más de 1 resultado coincidente, damos opción al usuario a cancelar la eliminación
+		if(len(result) > 1):
+			print("Hay " + str(len(result)) + " registros coincidentes. ¿Desea continuar? (sí/NO)")
+			opcion = input()
+			if(opcion != "sí"):
+				print("")
+				print("No se ha borrado ningún registro. Pulse una tecla para continuar")
+				input()
+				return
+
+		#Ejecutar la eliminación del registro indicado
+		controller.borrarContacto(nombre, apellido1, apellido2)
+		print("")
+		print("Contacto eliminado correctamente. Pulse una tecla para continuar")
+		input()
 
 def mostrarResultados(result):
 	for row in result:

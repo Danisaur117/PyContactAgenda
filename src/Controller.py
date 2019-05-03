@@ -56,7 +56,7 @@ class Controller:
 		#SELECT de todos los contactos de la agenda que coincidan con el nombre y apellidos
 		#indicados
 		mycursor = self.__database.cursor()
-		mycursor.execute("SELECT * FROM contacto WHERE nombre LIKE '%" + "%s" % (nombre) + "%' AND (apellido1 LIKE '%" + "%s" % (apellido1) + "%' OR apellido2 LIKE '%" + "%s" % (apellido2) + "%')")
+		mycursor.execute("SELECT * FROM contacto WHERE nombre LIKE '%" + "%s" % (nombre) + "%' AND apellido1 LIKE '%" + "%s" % (apellido1) + "%' AND apellido2 LIKE '%" + "%s" % (apellido2) + "%'")
 		result = mycursor.fetchall()
 		mycursor.close()
 		return result
@@ -74,3 +74,27 @@ class Controller:
 			return False
 		else:
 			return True
+
+	def modificarContacto(self, contacto):
+		#Modificar de la BD los datos de un contacto pasados en el objeto "contacto". Devolvemos true en caso de éxito y false en caso contrario
+		mycursor = self.__database.cursor()
+
+		#GENERAR LA CADENA DEL UPDATE : TODO
+		sql = ""
+		mycursor.execute(sql)
+
+		self.__database.commit()
+
+		if(mycursor.rowcount == 0):
+			return False
+		else:
+			return True
+
+	def borrarContacto(self, nombre, apellido1, apellido2):
+		#Eliminar de la BD los datos de un contacto indicado por los parámetros nombre, apellido1 y apellido2
+		mycursor = self.__database.cursor()
+
+		sql = "DELETE FROM contacto WHERE nombre='" + "%s" % (nombre) + "' AND apellido1 ='" + "%s" % (apellido1) + "' AND apellido2 = '" + "%s" % (apellido2) + "'"
+		mycursor.execute(sql)
+
+		self.__database.commit()

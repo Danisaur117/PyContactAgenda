@@ -27,6 +27,6 @@ PRIMARY KEY (`contactoId`)
 --
 
 LOCK TABLES `contacto` WRITE;
-INSERT INTO `contacto` VALUES (1,'Daniel','Belmonte','Urbano','961234567','San Roque 13','12045','JERICA','danisaur@gmail.com','2019-05-01 11:40:00');
+INSERT INTO `contacto` VALUES (1,'Daniel','Belmonte','Urbano','961234567','Mi caaaaasa','12045','JERICA','dbelmon@alumni.uv.es','2019-05-01 11:40:00');
 INSERT INTO `contacto` VALUES (2,'Homer','Jay','Simpson','555123456','Falsa 123','45678','SPRINGFIELD','homer.simpson@yahoo.com','2019-05-01 11:41:00');
 UNLOCK TABLES;
