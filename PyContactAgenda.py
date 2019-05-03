@@ -11,6 +11,7 @@
 #  	  en Python siguiendo el modelo MVC
 
 from src import Controller as kernel
+from src import Contacto as contacto
 
 def main():
 	#Inicializamos la conexión a la base de datos
@@ -33,12 +34,9 @@ def main():
 		if(opcion == '2'):
 			buscarContacto(controller)
 
-		#Añadir contacto : TODO
+		#Añadir contacto
 		if(opcion == '3'):
-			print("PENDIENTE DE IMPLEMENTAR")
-			print("")
-			print("Pulsa una tecla para continuar")
-			input()
+			anyadirContacto(controller)
 
 		#Modificar contacto : TODO
 		if(opcion == '4'):
@@ -172,6 +170,65 @@ def buscarContacto(controller):
 	print("Volviendo al menú principal. Pulsa una tecla para continuar")
 	input()
 
+def anyadirContacto(controller):
+	#Mostramos la cabecera de la aplicación y la cabecera de la opción
+	cabecera()
+	print("---> AÑADIR CONTACTO A LA AGENDA <---")
+	print("")
+	nombre = ""
+	apellido1 = ""
+	apellido2 = ""
+	telefono = ""
+	cp = ""
+
+	#Comprobamos que se ha introducido una cadena para el nombre
+	while(nombre == ""):
+		print("Introduce el nombre del nuevo contacto:")
+		nombre = input()
+
+	#Comprobamos que se ha introducido una cadena para el primer apellido
+	while(apellido1 == ""):
+		print("Introduce el primer apellido del nuevo contacto:")
+		apellido1 = input()
+
+	#Comprobamos que se ha introducido una cadena para el segundo apellido
+	while(apellido2 == ""):
+		print("Introduce el segundo apellido del nuevo contacto:")
+		apellido2 = input()
+
+	#Comprobamos que se ha introducido una sucesión de dígitos para el teléfono
+	while(telefono.isdigit() == False):
+		print("Introduce el teléfono del nuevo contacto:")
+		telefono = input()
+
+	#Solicitamos introducir la dirección
+	print("Introduce la dirección del nuevo contacto:")
+	direccion = input()
+
+	#Comprobamos que se ha introducido una sucesión de dígitos para el código postal
+	while(cp.isdigit() == False):
+		print("Introduce el código postal del nuevo contacto:")
+		cp = input()
+
+	#Solicitamos introducir la ciudad
+	print("Introduce la ciudad del nuevo contacto:")
+	ciudad = input()
+
+	#Solicitamos introducir el email
+	print("Introduce el email del nuevo contacto:")
+	email = input()
+
+	#Generamos un objeto de la clase contacto y hacemos la llamada para insertarlo en BD
+	nuevoC = contacto.Contacto(nombre, apellido1, apellido2, telefono, direccion, cp, ciudad, email)
+	if(controller.anyadirContacto(nuevoC) == False):
+		print("Ha habido un error al insertar el contacto. Por favor, revisa los datos y vuelve a intentarlo")
+	else:
+		print("Contacto insertado correctamente")
+
+	print("")
+	print("Pulsa una tecla para continuar")
+	input()
+
 def mostrarResultados(result):
 	for row in result:
 		id = row[0]
@@ -186,6 +243,7 @@ def mostrarResultados(result):
 
 def msgSalir():
 	print("Gracias por utilizar PyContactAgenda. Saliendo del programa ahora...")
+	input()
 
 if __name__ == "__main__":
     main()
